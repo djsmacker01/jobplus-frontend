@@ -1,42 +1,106 @@
-import React from 'react';
-import '../styles/form.scss';
-import { Link } from 'react-router-dom';
+import "../styles/form.scss";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function register() {
-  return (
-    <div class="form form--page">
-      <div class="form__group form__group--page">
-        <label class="form__label">First name</label>
-        <input class="form__field" type="text" placeholder="First name" />
-      </div>
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
 
-      <div class="form__group form__group--page">
-        <label class="form__label">Last name</label>
-        <input class="form__field" type="text" placeholder="Last name" />
-      </div>
+	// send data to server/backend
+	const registerUser = async (user) =>{
+	  try{
+		 const res = await axios.post('http://localhost:1337/api/auth/local/register', user);
+		 console.log(res);
+	  }
+	  catch(err){
+		console.log(err, err.response);
+	  }
+	};
 
-      <div class="form__group form__group--page">
-        <label class="form__label">Email</label>
-        <input class="form__field" type="text" placeholder="Email" />
-      </div>
+	const handleSubmit = (e) => {
+		e.preventDefault();
 
-      <div class="form__group form__group--page">
-        <label class="form__label">Choose password</label>
-        <input class="form__field" type="text" placeholder="Choose password" />
-      </div>
+		const user = {
+			firstName,
+			lastName,
+			username: email,
+			email,
+			password,
+			confirmPassword,
+		};
+		// console.log(user);
+		registerUser(user);
+	};
+	return (
+		<form className="form form--page" onSubmit={handleSubmit}>
+			<div className="form__group form__group--page">
+				<label className="form__label">First name</label>
+				<input
+					className="form__field"
+					type="text"
+					value={firstName}
+					placeholder="First name"
+					onChange={(e) => setFirstName(e.target.value)}
+				/>
+			</div>
 
-      <div class="form__group form__group--page">
-        <label class="form__label">Confirm Password</label>
-        <input class="form__field" type="text" placeholder="Confirm Password" />
-      </div>
+			<div className="form__group form__group--page">
+				<label className="form__label">Last name</label>
+				<input
+					className="form__field"
+					type="text"
+					value={lastName}
+					placeholder="Last name"
+					onChange={(e) => setLastName(e.target.value)}
+				/>
+			</div>
 
-      <div class="form__group form__group--page">
-        <input class="form__btn" type="submit" value="Register" />
-      </div>
+			<div className="form__group form__group--page">
+				<label className="form__label">Email</label>
+				<input
+					className="form__field"
+					type="text"
+					value={email}
+					placeholder="Email"
+					onChange={(e) => setEmail(e.target.value)}
+				/>
+			</div>
 
-      <footer>
-        Already have an account? <Link to='/login'>Login</Link>
-      </footer>
-    </div>
-  );
+			<div className="form__group form__group--page">
+				<label className="form__label">Choose password</label>
+				<input
+					className="form__field"
+					type="password"
+					placeholder="Choose password"
+					autoComplete="off"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+				/>
+			</div>
+
+			<div className="form__group form__group--page">
+				<label className="form__label">Confirm Password</label>
+				<input
+					className="form__field"
+					type="password"
+					placeholder="Confirm Password"
+					autoComplete="off"
+					value={confirmPassword}
+					onChange={(e) => setConfirmPassword(e.target.value)}
+				/>
+			</div>
+
+			<div className="form__group form__group--page">
+				<input className="form__btn" type="submit" value="Register" />
+			</div>
+
+			<footer>
+				Already have an account? <Link to='/login'>Login</Link>
+			</footer>
+		</form>
+	);
 }
