@@ -27,7 +27,7 @@ export default function register() {
 
 			//clear form fields
 			setFirstName("");
-			setLastName("");
+			setLastName(""); 
 			setEmail("");
 			setPassword('')
 			setConfirmPassword('')
