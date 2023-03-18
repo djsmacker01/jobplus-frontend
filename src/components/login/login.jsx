@@ -1,27 +1,53 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/form.scss';
+import React,{useState} from "react";
+import { Link } from "react-router-dom";
+import "../styles/form.scss";
 
 export default function login() {
-  return (
-    <div class="form form--page">
-      <div class="form__group form__group--page">
-        <label class="form__label">Email</label>
-        <input class="form__field" type="text" placeholder="Email" />
-      </div>
+	const [email, setEmail]= useState('');
+	const [password, setPassword] = useState('');
 
-      <div class="form__group form__group--page">
-        <label class="form__label">Password</label>
-        <input class="form__field" type="text" placeholder="Password" />
-      </div>
+	const handleSubmit =(e)=>{
+    e.preventDefault()
 
-      <div class="form__group form__group--page">
-        <input class="form__btn" type="submit" value="Login" />
-      </div>
+	 const user ={
+		email,
+		password
+	 };
+     console.log(user)
+	};
 
-      <footer>
-        Dont have an account? <Link to='/register'>Register</Link>
-      </footer>
-    </div>
-  );
+	return (
+		<form className="form form--page" onSubmit={handleSubmit}>
+			<div className="form__group form__group--page">
+				<label className="form__label">Email</label>
+				<input
+					className="form__field"
+					type="text"
+					placeholder="Email"
+					value={email}
+					onChange={(e)=> setEmail(e.target.value)}
+		
+				/>
+			</div>
+
+			<div className="form__group form__group--page">
+				<label className="form__label">Password</label>
+				<input
+					className="form__field"
+					type="password"
+					placeholder="Password"
+					value={password}
+					onChange={(e)=> setPassword(e.target.value)}
+				/>
+			</div>
+
+			<div className="form__group form__group--page">
+				<input className="form__btn" type="submit" value="Login" />
+			</div>
+
+			<footer>
+				Dont have an account? <Link to="/register">Register</Link>
+			</footer>
+		</form>
+	);
 }
