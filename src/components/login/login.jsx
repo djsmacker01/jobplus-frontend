@@ -26,13 +26,9 @@ export default function login() {
 			//clear form fields
 			setEmail("");
 			setPassword("");
-			setError({})
+			setError({});
 			console.log(response);
-
-		} 
-		catch (err) 
-		
-		{
+		} catch (err) {
 			setError(err.response.data.error);
 		}
 	};
@@ -63,7 +59,9 @@ export default function login() {
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 				</div>
-
+				<div>
+					
+				</div>
 				<div className="form__group form__group--page">
 					<input className="form__btn" type="submit" value="Login" />
 				</div>
